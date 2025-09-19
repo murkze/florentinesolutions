@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Florentine Solutions — Feature Overview</title>
+  <meta name="description" content="Florentine Solutions: automated permit intelligence, pre‑checks, and municipal compliance at scale." />
+  <style>
+    /* ===== Florentine Solutions — Public Feature Page (Bright Edition) ===== */
+    :root {
+      /* Light foundation */
+      --page: #f7f8fb;            /* near-white */
+      --ink: #0b1220;             /* body text */
+      --muted: #5a6678;           /* secondary text */
+      --line: #e6e9f0;            /* hairline */
+      --chip: #eef2f8;            /* soft chip */
+
+      /* Dark panels layered over light */
+      --panel: #0f1117;           /* carbon */
+      --panel-2: #121522;         /* deep navy carbon */
+      --panel-line: #1e2536;      /* panel border */
+
+      /* Accents */
+      --accent: #2563eb;          /* royal blue */
+      --accent-2: #22d3ee;        /* cyan */
+      --accent-3: #ffb703;        /* amber pop */
+      --good: #16a34a;            /* green */
+      --warn: #f59e0b;            /* amber */
+      --bad: #ef4444;             /* red */
+
+      /* Radii, shadows, layout */
+      --r-lg: 20px;
+      --r-md: 14px;
+      --r-sm: 10px;
+      --shadow-lg: 0 30px 60px rgba(0,0,0,.15), 0 2px 10px rgba(0,0,0,.06);
+      --shadow-md: 0 12px 30px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.05);
+      --maxw: 1200px;
+      --grid-gap: clamp(14px, 2vw, 28px);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font: 15px/1.6 var(--sans);
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, #ffffff 0%, #fbfcff 40%, #f7f8fb 100%);
+      /* subtle blueprint grid */
+      background-image:
+        radial-gradient(circle at 25px 25px, rgba(37,99,235,.06) 2px, transparent 0),
+        radial-gradient(circle at 25px 25px, rgba(34,211,238,.05) 1px, transparent 0);
+      background-size: 100px 100px, 60px 60px;
+      background-blend-mode: multiply;
+    }
+
+    .wrap { width: min(100%, var(--maxw)); margin: 0 auto; padding: 28px 18px 96px; }
+
+    /* Top bar (light) */
+    .topbar { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(8px); background: rgba(255,255,255,.7); border-bottom: 1px solid var(--line); }
+    .topbar-inner { width: min(100%, var(--maxw)); margin: 0 auto; padding: 14px 18px; display: flex; gap: 12px; align-items: center; }
+    .brand { display: flex; gap: 12px; align-items: center; }
+    .logo { width: 28px; height: 28px; border-radius: 9px; background:
+      conic-gradient(from 200deg at 50% 50%, var(--accent) 0 140deg, var(--accent-2) 140deg 270deg, var(--accent-3) 270deg 360deg);
+      box-shadow: 0 6px 18px rgba(37,99,235,.35);
+      outline: 1px solid #dfe6f3;
+    }
+    .brand h1 { font-size: 14px; margin: 0; letter-spacing: 1.3px; text-transform: uppercase; color: #2b3648; font-weight: 700; }
+
+    /* Shell: bright page with a dark feature rail */
+    .layout { display: grid; grid-template-columns: 1.35fr .65fr; gap: var(--grid-gap); align-items: start; }
+    @media (max-width: 1024px) { .layout { grid-template-columns: 1fr; } .rail { position: static; } }
+
+    /* Dark feature rail (sticky) */
+    .rail { position: sticky; top: 78px; display: grid; gap: 14px; }
+    .rail .panel { background: linear-gradient(180deg, var(--panel), var(--panel-2)); border: 1px solid var(--panel-line); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); color: #e8eef8; }
+    .rail .panel .hd { padding: 16px 16px 0; }
+    .rail .panel .bd { padding: 12px 16px 16px; }
+
+    /* Hero (bright) */
+    .hero { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); overflow: hidden; }
+    .hero-top { padding: clamp(18px, 3vw, 34px); border-bottom: 1px solid var(--line); display: grid; gap: 8px; }
+    .kicker { color: var(--accent); font-weight: 700; letter-spacing: .5px; text-transform: uppercase; font-size: 12px; }
+    .hero h2 { font-size: clamp(24px, 3vw, 40px); line-height: 1.15; margin: 0; }
+    .lede { margin: 6px 0 0; color: var(--muted); font-size: clamp(14px, 1.2vw, 16px); }
+
+    .hero-bot { display: grid; grid-template-columns: 1fr auto; gap: 16px; padding: 14px clamp(18px, 3vw, 34px); align-items: center; }
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill { padding: 8px 12px; border-radius: 999px; background: var(--chip); border: 1px solid var(--line); color: #334155; text-decoration: none; font-size: 12px; }
+    .pill:hover { box-shadow: 0 0 0 3px rgba(37,99,235,.15) inset; }
+
+    .stats { display: grid; grid-auto-flow: column; gap: 10px; }
+    .stat { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; box-shadow: var(--shadow-md); }
+    .stat .k { font: 700 18px var(--sans); color: var(--accent); }
+    .stat .t { color: var(--muted); font-size: 12px; }
+
+    /* Sections (bright cards) */
+    section.block { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); overflow: clip; }
+    .block .hd { padding: 18px 18px 0; }
+    .block .hd h3 { margin: 0; font-size: clamp(16px, 2vw, 22px); color: #111827; }
+    .block .bd { padding: 16px 18px 20px; }
+
+    /* Cards inside bright sections */
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--grid-gap); }
+    .grid.two { grid-template-columns: 1fr 1fr; }
+    .grid.one { grid-template-columns: 1fr; }
+    @media (max-width: 860px) { .grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 640px) { .grid, .grid.two { grid-template-columns: 1fr; } .stats { grid-auto-flow: row; } }
+
+    .card { border: 1px solid var(--line); border-radius: var(--r-md); background: #fff; padding: 14px; position: relative; box-shadow: var(--shadow-md); }
+    .card h4 { margin: 0 0 6px; font-size: 15px; color: #111827; }
+    .card p { margin: 0; color: var(--muted); font-size: 14px; }
+    .badge { display: inline-block; font-size: 11px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 999px; color: #334155; background: var(--chip); }
+
+    /* Tabs (clean, bright) */
+    .tabs { display: grid; gap: 12px; }
+    .tabs input { display: none; }
+    .tab-labels { display: grid; grid-auto-flow: column; gap: 8px; }
+    .tabs label { text-align: center; padding: 10px 12px; border: 1px solid var(--line); border-radius: 999px; cursor: pointer; color: #334155; background: var(--chip); user-select: none; }
+    .tabs label:hover { box-shadow: 0 0 0 3px rgba(37,99,235,.15) inset; }
+    .tabs .tab { display: none; }
+    #t1:checked + label, #t2:checked + label, #t3:checked + label { color: #0b1220; background: #fff; box-shadow: var(--shadow-md); }
+    #t1:checked ~ .tab-content .tab:nth-child(1),
+    #t2:checked ~ .tab-content .tab:nth-child(2),
+    #t3:checked ~ .tab-content .tab:nth-child(3) { display: block; }
+
+    /* Dark info tiles that float on white (for punch) */
+    .tile { background: linear-gradient(180deg, var(--panel), var(--panel-2)); color: #e8eef8; border: 1px solid var(--panel-line); border-radius: var(--r-md); padding: 14px; box-shadow: var(--shadow-lg); }
+    .tile h4 { color: var(--accent-2); margin: 0 0 6px; font-size: 15px; }
+
+    /* Section labels */
+    .label { display:inline-block; padding: 4px 8px; border-radius: 999px; background: #eaf2ff; color: #1e40af; border: 1px solid #d7e3ff; font-weight: 700; letter-spacing: .3px; font-size: 11px; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1>Florentine Solutions — Feature Page</h1>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="layout">
+      <!-- LEFT: Bright content blocks -->
+      <div class="stack" style="display:grid; gap: var(--grid-gap)">
+        <!-- HERO (bright) -->
+        <section class="hero">
+          <div class="hero-top">
+            <span class="kicker">Permit Pre‑Checks • Policy‑Aware</span>
+            <h2>Automated Permit Intelligence that De‑Risks Submissions</h2>
+            <p class="lede">Detect missing documents, zoning conflicts, code non‑compliance, and fee anomalies <em>before</em> submission. Built for municipal scale; simple for builders.</p>
+          </div>
+          <div class="hero-bot">
+            <nav class="pills" aria-label="On‑page navigation">
+              <a class="pill" href="#how">How it Works</a>
+              <a class="pill" href="#modules">Core Modules</a>
+              <a class="pill" href="#coverage">Coverage & Data</a>
+              <a class="pill" href="#assurance">Accuracy & QA</a>
+              <a class="pill" href="#security">Security</a>
+              <a class="pill" href="#perf">Performance</a>
+              <a class="pill" href="#roadmap">Roadmap</a>
+            </nav>
+            <div class="stats">
+              <div class="stat"><div class="k">≤ 90 sec</div><div class="t">Typical pre‑check turnaround</div></div>
+              <div class="stat"><div class="k">200+ rules</div><div class="t">Local bylaws & code checks*</div></div>
+              <div class="stat"><div class="k">10–30%</div><div class="t">Fewer resubmissions*</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- HOW IT WORKS (bright) -->
+        <section id="how" class="block">
+          <div class="hd"><span class="label">How it works</span><h3>From Upload → Evidence‑Backed Findings</h3></div>
+          <div class="bd">
+            <div class="tabs">
+              <div class="tab-labels">
+                <input type="radio" name="tabs-how" id="t1" checked>
+                <label for="t1">1) Intake</label>
+                <input type="radio" name="tabs-how" id="t2">
+                <label for="t2">2) Reasoning</label>
+                <input type="radio" name="tabs-how" id="t3">
+                <label for="t3">3) Outputs</label>
+              </div>
+              <div class="tab-content">
+                <div class="tab">
+                  <div class="grid two">
+                    <div class="card"><h4>Structured upload</h4><p>Upload PDFs (drawings, energy calcs, schedules), choose project class (e.g., <span class="badge">R1 addition</span>), add site address or parcel ID.</p></div>
+                    <div class="card"><h4>Auto‑enrichment</h4><p>We fetch zoning, overlays, heritage, floodplain, lot size/frontage, and prior permits (where available) to contextualize checks.</p></div>
+                  </div>
+                </div>
+                <div class="tab">
+                  <div class="grid two">
+                    <div class="card"><h4>Policy engine</h4><p>Versioned rulebooks codify municipal code/bylaws. Each rule emits findings with citations, severity, and remediation tips.</p></div>
+                    <div class="card"><h4>Document parser</h4><p>Plan‑sheet OCR & pattern recognition extracts titles, stamps, schedules, elevations, setbacks, and critical dimensions.</p></div>
+                    <div class="card"><h4>Guardrailed LLM</h4><p>Models reference authoritative text only with retrieval filters, confidence thresholds, and deterministic fallbacks.</p></div>
+                    <div class="card"><h4>Conflict detection</h4><p>Cross‑checks site context (lot/overlay) vs proposal (height, coverage, use, parking) to flag inconsistencies early.</p></div>
+                  </div>
+                </div>
+                <div class="tab">
+                  <div class="grid two">
+                    <div class="card"><h4>PDF pre‑check report</h4><p>One clean document summarizing passes/fails, missing items, and risks — ready for internal review or to return to the applicant.</p></div>
+                    <div class="card"><h4>Machine‑readable JSON</h4><p>Every finding encoded with <span class="badge">ruleId</span>, <span class="badge">evidence</span>, <span class="badge">confidence</span>, <span class="badge">severity</span>, <span class="badge">remediation</span>.</p></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- MODULES (mix of bright cards + dark tiles for punch) -->
+        <section id="modules" class="block">
+          <div class="hd"><span class="label">Core Modules</span><h3>What runs under the hood</h3></div>
+          <div class="bd">
+            <div class="grid">
+              <div class="card"><h4>Checklist Engine</h4><p>City‑specific pre‑submission checklists detect missing forms, schedules, stamps, fees, and plan‑set pages.</p><span class="badge">Versioned per city</span></div>
+              <div class="tile"><h4>Policy Engine</h4><p>Codified zoning/land‑use/overlay rules with snippet citations and exception handling for variances.</p></div>
+              <div class="card"><h4>Document Parsing</h4><p>OCR + layout cues to extract sheet titles, scales, elevations, dimensions, seals, and revision deltas.</p></div>
+              <div class="tile"><h4>GIS Context</h4><p>Parcel metadata, lot geometry, overlays (flood/heritage/parking), frontage, and adjacent uses.</p></div>
+              <div class="card"><h4>Fees & Timing</h4><p>Pre‑estimate fees and typical timelines by project class and historical queue data (where available).</p></div>
+              <div class="tile"><h4>Quality Gates</h4><p>Dual‑pass validation (deterministic → model review) with thresholds and human‑in‑the‑loop overrides.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- COVERAGE & DATA (bright) -->
+        <section id="coverage" class="block">
+          <div class="hd"><span class="label">Coverage & Data</span><h3>Where it works and how it stays current</h3></div>
+          <div class="bd">
+            <div class="grid two">
+              <div class="card"><h4>Municipal scope</h4><p>Start with target municipalities and expand via a versioned ruleset library that ships with checklists, policy references, document expectations, and exception handling.</p></div>
+              <div class="card"><h4>Sources & refresh</h4><p>Bylaws and code references include source URLs, issue dates, and change logs. Scheduled refreshes with reviewed diffs keep the rulebase current.</p></div>
+            </div>
+            <div class="grid two" style="margin-top: var(--grid-gap)">
+              <div class="card"><h4>Data governance</h4><p>Partner data segregated by tenant. No training on partner‑private uploads unless explicitly allowed. PII redaction for stored artifacts when feasible.</p></div>
+              <div class="card"><h4>Interoperability</h4><p>Outputs support CSV, JSON, and PDF. Optional webhooks for partner pipelines. Import adapters for common e‑permit portals to reduce double‑entry.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ACCURACY & QA (bright) -->
+        <section id="assurance" class="block">
+          <div class="hd"><span class="label">Accuracy & QA</span><h3>Explainable by design</h3></div>
+          <div class="bd">
+            <div class="grid two">
+              <div class="card"><h4>Grounded reasoning</h4><p>Retrieval strictly scoped to verified sources. Each finding cites the exact clause or checklist item used to decide.</p></div>
+              <div class="card"><h4>Confidence thresholds</h4><p>Low‑confidence findings are labeled for human review with side‑by‑side evidence. Deterministic rules always take precedence.</p></div>
+              <div class="card"><h4>Test harness</h4><p>Golden dataset by city validates the rulebase before releases; regression suite prevents silent drift.</p></div>
+              <div class="card"><h4>Audit trail</h4><p>Every run retains version IDs for rulebooks, model prompts, and input artifacts so results are reproducible.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECURITY (bright) -->
+        <section id="security" class="block">
+          <div class="hd"><span class="label">Security</span><h3>Built for sensitive workloads</h3></div>
+          <div class="bd">
+            <div class="grid two">
+              <div class="card"><h4>Isolation</h4><p>Tenant‑level data isolation. Artifacts encrypted at rest and in transit. Strict TTLs for transient parsing caches.</p></div>
+              <div class="card"><h4>Access control</h4><p>Role‑based access for municipal staff vs. external applicants. Immutable run logs for compliance.</p></div>
+            </div>
+            <details style="margin-top:12px">
+              <summary>Additional implementation notes</summary>
+              <p>Replace with security/compliance specifics from your notes (e.g., hosting region, backups, incident response, subprocessors, data retention).</p>
+            </details>
+          </div>
+        </section>
+
+        <!-- PERFORMANCE (bright) -->
+        <section id="perf" class="block">
+          <div class="hd"><span class="label">Performance</span><h3>Indicative throughput & savings</h3></div>
+          <div class="bd">
+            <div class="grid">
+              <div class="card"><h4>Throughput</h4><p>~<strong>40–60</strong> pre‑checks/min/worker for checklist‑only flows; <strong>20–30</strong>/min with policy engine enabled.</p></div>
+              <div class="card"><h4>Savings</h4><p><strong>10–30%</strong> fewer resubmissions via early detection of missing artifacts and policy conflicts.</p></div>
+              <div class="card"><h4>Time to verdict</h4><p>Median <strong>≤ 90s</strong> (document size dependent). Deterministic checks stream back as they complete.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ROADMAP (bright) -->
+        <section id="roadmap" class="block">
+          <div class="hd"><span class="label">Roadmap</span><h3>What’s next</h3></div>
+          <div class="bd">
+            <div class="grid two">
+              <div class="card"><h4>Deeper plan intelligence</h4><p>Elevation/section understanding (stairs, egress, glazing ratios), fire separation inference, and energy model cross‑checks.</p></div>
+              <div class="card"><h4>Variance helper</h4><p>Prepares variance rationale drafts with references and neighborhood comparables for edge cases.</p></div>
+              <div class="card"><h4>Portal connectors</h4><p>Push pre‑check outcomes into common e‑permit portals to avoid re‑entry and reduce queue time.</p></div>
+              <div class="card"><h4>Learning from outcomes</h4><p>With municipal approval, compare predictions vs. official decisions to continuously tune the rulebase.</p></div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- RIGHT: Dark feature rail on bright background -->
+      <aside class="rail" aria-label="Feature Rail">
+        <div class="panel">
+          <div class="hd"><h3 style="margin:0;font-size:14px;letter-spacing:.6px;text-transform:uppercase;color:#c4d0e8">Partner Snapshot</h3></div>
+          <div class="bd" style="display:grid;gap:10px">
+            <div class="tile"><h4>Policy‑aware pre‑flight</h4><p style="margin:0;color:#b6c2da">Up‑to‑date code/zone/overlay checks</p></div>
+            <div class="tile"><h4>Document QA</h4><p style="margin:0;color:#b6c2da">Detects missing drawings, stamps, schedules, forms</p></div>
+            <div class="tile"><h4>Explainable findings</h4><p style="margin:0;color:#b6c2da">Each flag cites exact sources and snippets</p></div>
+            <div class="tile"><h4>Workflow‑ready outputs</h4><p style="margin:0;color:#b6c2da">PDF summary + machine‑readable JSON</p></div>
+            <div class="tile"><h4>Privacy by design</h4><p style="margin:0;color:#b6c2da">No public data exposure; scoped storage</p></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="hd"><h3 style="margin:0;font-size:14px;letter-spacing:.6px;text-transform:uppercase;color:#c4d0e8">Assurance</h3></div>
+          <div class="bd" style="display:grid;gap:10px">
+            <div class="tile"><h4>Grounded reasoning</h4><p style="margin:0;color:#b6c2da">Only verified sources; deterministic first</p></div>
+            <div class="tile"><h4>Confidence thresholds</h4><p style="margin:0;color:#b6c2da">Low‑confidence → human review</p></div>
+            <div class="tile"><h4>Auditability</h4><p style="margin:0;color:#b6c2da">Version IDs for rules, prompts, inputs</p></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="hd"><h3 style="margin:0;font-size:14px;letter-spacing:.6px;text-transform:uppercase;color:#c4d0e8">Performance</h3></div>
+          <div class="bd" style="display:grid;gap:10px">
+            <div class="tile"><h4>≤ 90s</h4><p style="margin:0;color:#b6c2da">Median time to pre‑check</p></div>
+            <div class="tile"><h4>10–30%</h4><p style="margin:0;color:#b6c2da">Fewer resubmissions*</p></div>
+            <div class="tile"><h4>20–60/min</h4><p style="margin:0;color:#b6c2da">Indicative throughput per worker</p></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>
